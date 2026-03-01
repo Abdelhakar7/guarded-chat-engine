@@ -1,0 +1,6 @@
+# virtual environment
+gbenv/
+
+# env files
+.env
+app/.env
