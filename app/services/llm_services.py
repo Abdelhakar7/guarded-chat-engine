@@ -20,6 +20,7 @@ def generate_chat_response(
     messages: List[Message],
     system_prompt: str,
     model: str = "arcee-ai/trinity-large-preview:free",
+    temperature: float = 0.7
 ) -> str:
     """
     Generate response from OpenRouter LLM.
@@ -47,7 +48,7 @@ def generate_chat_response(
         response = client.chat.completions.create(
             model=model,
             messages=payload,
-            temperature=0.7,
+            temperature=temperature,
         )
 
         return response.choices[0].message.content or ""

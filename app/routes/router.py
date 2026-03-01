@@ -16,19 +16,18 @@ def chat_endpoint(chat_request: ChatRequest):
     """
 
     # Select the system prompt (template)
-    system_prompt = (
-        "You are Sirane, a cheerful AI assistant. "
-        "Answer politely and concisely. "
-        "Do not engage in sexual or violent topics."
-    )
-
+    template_file = f"app/prompts/{chat_request.template}.txt"
+    with open(template_file, "r", encoding="utf-8") as f:
+        system_prompt = f.read()
+        
+    temperature = chat_request.temperature if chat_request.temperature is not None else 0.7
     # Generate LLM response
-    reply = generate_chat_response(chat_request.messages, system_prompt)
+    reply = generate_chat_response(chat_request.messages, system_prompt, temperature=temperature)
 
     # Return structured response
     return ChatResponse(
         reply=reply,
         # can be dynamic if you implement tool_call/refusal templates
-        template_used="task_spec",
+        template_used=chat_request.template,
         refusal=False                # basic version; add refusal logic later
     )
