@@ -1,3 +1,4 @@
+from typing import List, Optional
 from pydantic import BaseModel
 from typing import List, Literal
 
@@ -12,7 +13,9 @@ class Message(BaseModel):
 
 
 class ChatRequest(BaseModel):
-    messages: List[Message]  # note: singular 'Message', not 'Messages'
+    messages: List[Message]
+    template: Optional[str] = "task_spec"   # default template
+    temperature: Optional[float] = 0.7      # default temperature
 
 # Chat response schema
 
